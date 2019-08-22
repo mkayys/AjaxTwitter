@@ -86,6 +86,27 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/api_util.js":
+/*!******************************!*\
+  !*** ./frontend/api_util.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+const APIUtil = {
+    toggleUser: (id, method) => {
+        return $.ajax({
+            url: `/users/${id}/follow`,
+            method: method,
+            dataType: 'json'
+        })
+    }
+};
+
+module.exports = APIUtil;
+
+/***/ }),
+
 /***/ "./frontend/follow_toggle.js":
 /*!***********************************!*\
   !*** ./frontend/follow_toggle.js ***!
@@ -95,6 +116,10 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+/* harmony import */ var _api_util__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_api_util__WEBPACK_IMPORTED_MODULE_0__);
+
+
 class FollowToggle {
     constructor($el) {
         // $el is convention that it is a jQuery object
@@ -103,7 +128,10 @@ class FollowToggle {
 
         this.$el = $el;
 
+        this.handleClick = this.handleClick.bind(this);
+
         this.render();
+        this.$el.on('click', this.handleClick);
     }
 
     render() {
@@ -121,24 +149,19 @@ class FollowToggle {
         e.preventDefault();
         let method = (this.followState === "followed") ? 'DELETE' : 'POST';
 
-        return $.ajax({
-            method: method,
-            url: `/users/${this.userId}/follow`,
-            dataType: 'JSON'
-        }).then(
-            // by the code: 200 successful
-            (res) => {
-                (this.followState === "followed") ? "unfollowed" : "followed";
-                this.render();
-            }
-        ).fail(
-            // need a status code!
-            (err) => {
-                console.log('your code broke son');
-            }
+        _api_util__WEBPACK_IMPORTED_MODULE_0___default.a.toggleUser(this.userId, method)
+            .then(
+                // by the code: 200 successful
+                (res) => {
+                    (this.followState === "followed") ? "unfollowed" : "followed";
+                    this.render();
+                }
+            ).fail(
+                // need a status code!
+                (err) => {
+                    console.log('your code broke son');
+                }
         );
-
-
 
 
     }

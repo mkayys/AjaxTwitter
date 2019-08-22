@@ -1,3 +1,5 @@
+import APIUtil from './api_util';
+
 class FollowToggle {
     constructor($el) {
         // $el is convention that it is a jQuery object
@@ -6,7 +8,10 @@ class FollowToggle {
 
         this.$el = $el;
 
+        this.handleClick = this.handleClick.bind(this);
+
         this.render();
+        this.$el.on('click', this.handleClick);
     }
 
     render() {
@@ -24,24 +29,19 @@ class FollowToggle {
         e.preventDefault();
         let method = (this.followState === "followed") ? 'DELETE' : 'POST';
 
-        return $.ajax({
-            method: method,
-            url: `/users/${this.userId}/follow`,
-            dataType: 'JSON'
-        }).then(
-            // by the code: 200 successful
-            (res) => {
-                (this.followState === "followed") ? "unfollowed" : "followed";
-                this.render();
-            }
-        ).fail(
-            // need a status code!
-            (err) => {
-                console.log('your code broke son');
-            }
+        APIUtil.toggleUser(this.userId, method)
+            .then(
+                // by the code: 200 successful
+                (res) => {
+                    (this.followState === "followed") ? "unfollowed" : "followed";
+                    this.render();
+                }
+            ).fail(
+                // need a status code!
+                (err) => {
+                    console.log('your code broke son');
+                }
         );
-
-
 
 
     }
