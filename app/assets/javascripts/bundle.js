@@ -86,14 +86,60 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/follow_toggle.js":
+/*!***********************************!*\
+  !*** ./frontend/follow_toggle.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class FollowToggle {
+    constructor($el) {
+        // $el is convention that it is a jQuery object
+        this.userId = $el.data('user-id');
+        this.followState = $el.data('initial-follow-state');
+
+        this.$el = $el;
+
+        this.render();
+    }
+
+    render() {
+        if (this.followState === 'unfollowed') {
+            this.$el.text('Follow');
+
+        } else {
+            this.$el.text('Unfollow');
+        }
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (FollowToggle);
+
+/***/ }),
+
 /***/ "./frontend/twitter.js":
 /*!*****************************!*\
   !*** ./frontend/twitter.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _follow_toggle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
 
 
+$(() => {
+    let $buttons = Array.from($('button.follow-toggle'));
+    // wrapped in a jQuery object but then the individual buttons are not jQuery objects
+
+    $buttons.forEach( (button) => {
+        new _follow_toggle__WEBPACK_IMPORTED_MODULE_0__["default"]($(button));
+    })
+});
 
 /***/ })
 
