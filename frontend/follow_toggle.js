@@ -50,7 +50,7 @@ class FollowToggle {
             .fail(
                 // need a status code!
                 (err) => {
-                    console.log('your code broke son');
+                    console.log(':(');
                 }
         );
 
