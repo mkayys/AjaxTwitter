@@ -5,7 +5,10 @@ class UsersSearch {
         this.$ul = $('ul.users');
     }
 
-    
+    handleInput(e) {
+        e.preventDefault();
+        //need an ajax call
+    }
 }
 
 export default UsersSearch;
