@@ -123,8 +123,8 @@ __webpack_require__.r(__webpack_exports__);
 class FollowToggle {
     constructor($el) {
         // $el is convention that it is a jQuery object
-        this.userId = $el.data('user-id');
-        this.followState = $el.data('initial-follow-state');
+        this.userId = this.$el.data('user-id');
+        this.followState = this.$el.data('initial-follow-state');
 
         this.$el = $el;
 
@@ -132,6 +132,11 @@ class FollowToggle {
 
         this.render();
         this.$el.on('click', this.handleClick);
+        // don't need to pass in event because the browser will invoke it with the event
+
+        // this.$el.on('click', (event) => {
+            // this.handleClick(event);
+        //})
     }
 
     render() {
@@ -152,6 +157,7 @@ class FollowToggle {
     }
 
     handleClick(e) {
+        // EVENT HANDLER; need to pass in event
         // handle something (naming convention for function) is just a callback to pass in the event listener
 
         e.preventDefault();
@@ -170,7 +176,7 @@ class FollowToggle {
             .fail(
                 // need a status code!
                 (err) => {
-                    console.log(':(');
+                    console.log(':( ');
                 }
         );
 
@@ -193,6 +199,9 @@ class FollowToggle {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _follow_toggle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
 
+
+// document ready callback => it gets run when the DOMContentLoaded
+// it's important because we need everything to exist before we manipulate it
 
 $(() => {
     let $buttons = Array.from($('button.follow-toggle'));

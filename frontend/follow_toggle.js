@@ -3,8 +3,8 @@ import APIUtil from './api_util';
 class FollowToggle {
     constructor($el) {
         // $el is convention that it is a jQuery object
-        this.userId = $el.data('user-id');
-        this.followState = $el.data('initial-follow-state');
+        this.userId = this.$el.data('user-id');
+        this.followState = this.$el.data('initial-follow-state');
 
         this.$el = $el;
 
@@ -12,6 +12,11 @@ class FollowToggle {
 
         this.render();
         this.$el.on('click', this.handleClick);
+        // don't need to pass in event because the browser will invoke it with the event
+
+        // this.$el.on('click', (event) => {
+            // this.handleClick(event);
+        //})
     }
 
     render() {
@@ -32,6 +37,7 @@ class FollowToggle {
     }
 
     handleClick(e) {
+        // EVENT HANDLER; need to pass in event
         // handle something (naming convention for function) is just a callback to pass in the event listener
 
         e.preventDefault();
@@ -50,7 +56,7 @@ class FollowToggle {
             .fail(
                 // need a status code!
                 (err) => {
-                    console.log(':(');
+                    console.log(':( ');
                 }
         );
 
